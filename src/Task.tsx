@@ -9,7 +9,17 @@ export interface iTask {
   done: boolean;
 } 
 
-function Task(props: {task:iTask, doneTask: (i:number) => void, deleteTask:(i:number) => void, index:number}):JSX.Element {
+interface Props {
+  task:iTask,
+  doneTask: (i:number) => void,
+  deleteTask:(i:number) => void,
+  index:number
+} 
+
+
+//const  Task = (props: {task:iTask, doneTask: (i:number) => void, deleteTask:(i:number) => void, index:number}):JSX.Element => {
+//const  Task = (props: Props):JSX.Element => {
+const  Task: React.FC<Props> = (props) => {  
   const task:iTask = props.task;
   const index:number = props.index;
     return (
@@ -17,9 +27,27 @@ function Task(props: {task:iTask, doneTask: (i:number) => void, deleteTask:(i:nu
         <h2
           style={{textDecoration: task.done ? 'line-through' : '' }}
         >
-          {task.name} <FontAwesomeIcon  icon={task.done? faTimesCircle : faCheckCircle }  onClick={ () => props.doneTask(index)}  /> 
-          <FontAwesomeIcon icon={faTrash} onClick={ () => props.deleteTask(index)} />
-        </h2>
+          {task.name} 
+        </h2> 
+        <div className="modal-footer" role="group">
+
+          <button 
+            type="button" 
+            className="btn btn-success"
+            onClick={ () => props.doneTask(index)}
+          >
+            <FontAwesomeIcon  icon={task.done? faTimesCircle : faCheckCircle }    />
+          </button>
+          <button 
+            type="button" 
+            className="btn btn-danger"
+            onClick={ () => props.deleteTask(index)}
+          >
+            <FontAwesomeIcon icon={faTrash}  />
+          </button>
+        </div>     
+
+
       </div>
     );
 }

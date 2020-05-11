@@ -5,7 +5,8 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 type FormEvent = React.FormEvent<HTMLElement>;
 
 
-function App(): JSX.Element {
+//function App(): JSX.Element {  //Ambas formas son validas 
+const App: React.FC = () => {
   const [newTask, setNewTask] = useState<string>("");
   const [tasks, setTask] = useState<iTask[]>([]);
   const taksInput = useRef<HTMLInputElement>(null);
@@ -60,14 +61,24 @@ const deleteTask = (i:number):void => {
               </form>
             </div>
           </div>
-          {tasks.map((task: iTask, index: number) => (
+          {tasks.map((task: iTask, index: number) => (!task.done ? (
             <Task  
               task={task}
               doneTask={doneTask}
               deleteTask={deleteTask}
               index={index}
               key={index}
-            />
+            />) : null
+          ))}
+
+          {tasks.map((task: iTask, index: number) => (task.done ? (
+            <Task  
+              task={task}
+              doneTask={doneTask}
+              deleteTask={deleteTask}
+              index={index}
+              key={index}
+            />) : null
           ))}
         </div>
       </div>
